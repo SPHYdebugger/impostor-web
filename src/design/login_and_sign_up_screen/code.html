@@ -1,0 +1,183 @@
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#ad2bee",
+            "background-light": "#f7f6f8",
+            "background-dark": "#1c1022",
+            "accent-green": "#39ff14",
+          },
+          fontFamily: {
+            "display": ["Be Vietnam Pro"]
+          },
+          borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: "Be Vietnam Pro", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar Component -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/20 px-6 lg:px-20 py-4 bg-background-light dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.1288 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M10.4485 13.8519C10.4749 13.9271 10.6203 14.246 11.379 14.7361C12.298 15.3298 13.7492 15.9145 15.6717 16.3735C18.0007 16.9296 20.8712 17.2655 24 17.2655C27.1288 17.2655 29.9993 16.9296 32.3283 16.3735C34.2508 15.9145 35.702 15.3298 36.621 14.7361C37.3796 14.246 37.5251 13.9271 37.5515 13.8519C37.5287 13.7876 37.4333 13.5973 37.0635 13.2931C36.5266 12.8516 35.6288 12.3647 34.343 11.9175C31.79 11.0295 28.1333 10.4437 24 10.4437C19.8667 10.4437 16.2099 11.0295 13.657 11.9175C12.3712 12.3647 11.4734 12.8516 10.9365 13.2931C10.5667 13.5973 10.4713 13.7876 10.4485 13.8519ZM37.5563 18.7877C36.3176 19.3925 34.8502 19.8839 33.2571 20.2642C30.5836 20.9025 27.3973 21.2655 24 21.2655C20.6027 21.2655 17.4164 20.9025 14.7429 20.2642C13.1498 19.8839 11.6824 19.3925 10.4436 18.7877V34.1275C10.4515 34.1545 10.5427 34.4867 11.379 35.027C12.298 35.6207 13.7492 36.2054 15.6717 36.6644C18.0007 37.2205 20.8712 37.5564 24 37.5564C27.1288 37.5564 29.9993 37.2205 32.3283 36.6644C34.2508 36.2054 35.702 35.6207 36.621 35.027C37.4573 34.4867 37.5485 34.1546 37.5563 34.1275V18.7877ZM41.5563 13.8546V34.1455C41.5563 36.1078 40.158 37.5042 38.7915 38.3869C37.3498 39.3182 35.4192 40.0389 33.2571 40.5551C30.5836 41.1934 27.3973 41.5564 24 41.5564C20.6027 41.5564 17.4164 41.1934 14.7429 40.5551C12.5808 40.0389 10.6502 39.3182 9.20848 38.3869C7.84205 37.5042 6.44365 36.1078 6.44365 34.1455L6.44365 13.8546C6.44365 12.2684 7.37223 11.0454 8.39581 10.2036C9.43325 9.3505 10.8137 8.67141 12.343 8.13948C15.4203 7.06909 19.5418 6.44366 24 6.44366C28.4582 6.44366 32.5797 7.06909 35.657 8.13948C37.1863 8.67141 38.5667 9.3505 39.6042 10.2036C40.6278 11.0454 41.5563 12.2684 41.5563 13.8546Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-black leading-tight tracking-[-0.015em]">The Impostor</h2>
+</div>
+<div class="flex items-center gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Game Modes</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Leaderboard</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Support</a>
+</div>
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-full h-10 px-6 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+<span>Play Free</span>
+</button>
+</div>
+</header>
+<main class="flex-1 flex items-stretch overflow-hidden">
+<!-- Left Side: Visual/Illustration (Hidden on mobile) -->
+<div class="hidden lg:flex flex-1 relative bg-background-dark overflow-hidden">
+<div class="absolute inset-0 opacity-40 mix-blend-overlay bg-gradient-to-br from-primary via-transparent to-accent-green" data-alt="Dynamic purple and green abstract game background"></div>
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Mysterious dark space themed digital art with neon lights" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDYKzPD5yXnljEVa-pHuE6peBaDYsAtk5n6r4nsXHTihn4r9V-4bjy1Yvc7JDvcR_guW7gkAHFlcVPLH9UKRomrhP8p6YZhkS8oRwrtRX-wLi6SzKIKZLqzkGbv6Py6Yml0T9aPOWN5HFNJydVdAjvrSm7vnRkCJPUsHA2LT89K5Vx2-Wz8jvW68X18nv4LYzNcgT6G9M1sSNKxoCHb7yYE7Va_Dsxq5XXK8BU82pWYXKGOm9FaA_pKRYD-HxmHPqxFIfLagMHCa8v3');"></div>
+<div class="relative z-10 flex flex-col justify-end p-20 w-full max-w-2xl">
+<div class="bg-black/40 backdrop-blur-xl p-10 rounded-xl border border-white/10">
+<span class="inline-block px-3 py-1 bg-accent-green/20 text-accent-green text-xs font-bold tracking-widest uppercase rounded-full mb-4">Live Now</span>
+<h1 class="text-5xl font-black text-white leading-tight mb-6">
+                Trust No One. <br/>
+<span class="text-primary italic">Find the Deceiver.</span>
+</h1>
+<p class="text-slate-300 text-lg leading-relaxed max-w-md">
+                Experience the next generation of social deduction. Play with friends online or offline in a variety of maps and game modes.
+              </p>
+<div class="mt-8 flex gap-4">
+<div class="flex -space-x-3">
+<div class="size-10 rounded-full border-2 border-background-dark bg-slate-500 overflow-hidden" data-alt="User avatar 1">
+<img alt="Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyMrZdIyoEoB4kLsOcb9Llyio9VOWihdrLee60dmfg8G59h-vsKmlD7XKy4Q8Asadv9MXAHL8XxgsrtnzAXYCW13BAPKWmt7H45JH_ICUU9xEwwDLa4uabeMzgYc3RBNWz5PP7LcpqAJX9Iot2ibzKOyepzb-7DqFfCXaJqADVp_8SHPbnHqbXHcNlJCbzAvahmfq57WfRI7T1Wc5QdSRWPF8SY9rQEtxddHe-0G98gpMD7FKwJi-fY_5c7I69U4FfNUsFM29c3Xui"/>
+</div>
+<div class="size-10 rounded-full border-2 border-background-dark bg-slate-500 overflow-hidden" data-alt="User avatar 2">
+<img alt="Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo-fYKRhBQyId0QIWAe4w_hIxRU6AijL_DcK-nJ5WsbvsXD7K8yOozLoHgWLadeVHaejyWWAaOJzbeWA7EXD3CEzy0RcQ6xnoYnIDyD8zySoLgIoFEUtkDiYt6WKaXgLzjVbJz4fQrUn58cz_icvIHqrrCRGkGLVeZUj7Kpg92WD9E10837OaRlm4DJ4Wks0dhYQDdCsOgy2b69-iZ0y9v3gVfnrxwcSVC0Tv_3zvYqSINDhCIcKRvCXEFs6BS7p0wNWPriRwp2mQ_"/>
+</div>
+<div class="size-10 rounded-full border-2 border-background-dark bg-slate-500 overflow-hidden" data-alt="User avatar 3">
+<img alt="Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYDb9ICi0owx-xhlrmlWTKqFyATp6pKdhtSG0v4GiJhEF1DyIQJlpgM2YI9PqvmmEgazQdpoIgAuQ2JL1ZMUKCPTiYvBTGuUNcPrH9qz0Kp0w2B1DXRMNEOnbbqYTckChpUZJm96803dK_yxR_0w9Y-fXpwpe-zNnF_Yk01917q9R1h9yE0lQMSjFCqo4bcp5RgAFXrYIZeTXHph2n3NyM8xN5awr36-tLjH3u1UoFKQ7mMXtIvXjL1DhK8t-vhLtxG7L3OanCM-ql"/>
+</div>
+</div>
+<p class="text-slate-400 text-sm self-center">Join <span class="text-white font-bold">12,000+</span> agents online</p>
+</div>
+</div>
+</div>
+<!-- Decorative "Impostor" Scan Overlay -->
+<div class="absolute top-20 right-20 flex flex-col items-center gap-2 opacity-30">
+<span class="material-symbols-outlined text-accent-green text-6xl animate-pulse">radar</span>
+<span class="text-accent-green text-[10px] font-mono uppercase tracking-widest">Scanning Crew...</span>
+</div>
+</div>
+<!-- Right Side: Login/Sign Up Form -->
+<div class="w-full lg:w-[540px] flex flex-col justify-center px-8 lg:px-16 py-12 bg-background-light dark:bg-background-dark">
+<div class="max-w-sm mx-auto w-full">
+<div class="mb-10">
+<h2 class="text-3xl font-black text-slate-900 dark:text-white mb-2">Welcome Back</h2>
+<p class="text-slate-600 dark:text-slate-400">Identify yourself to join the mission.</p>
+</div>
+<!-- Tabs -->
+<div class="flex p-1 bg-slate-200 dark:bg-slate-800/50 rounded-xl mb-8">
+<button class="flex-1 py-2 text-sm font-bold rounded-lg bg-white dark:bg-slate-700 text-primary shadow-sm transition-all">Login</button>
+<button class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">Sign Up</button>
+</div>
+<form class="space-y-6">
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300 ml-1">Email Address</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">alternate_email</span>
+</div>
+<input class="w-full pl-11 pr-4 py-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500" placeholder="agent@mission.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center ml-1">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Password</label>
+<a class="text-xs font-semibold text-primary hover:underline" href="#">Forgot?</a>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">lock</span>
+</div>
+<input class="w-full pl-11 pr-12 py-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500" placeholder="••••••••" type="password"/>
+<button class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-xl">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-3 ml-1">
+<input class="size-5 rounded-md border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent" id="remember" type="checkbox"/>
+<label class="text-sm font-medium text-slate-600 dark:text-slate-400" for="remember">Remember my clearance level</label>
+</div>
+<button class="w-full py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2" type="submit">
+<span>Enter Game</span>
+<span class="material-symbols-outlined">login</span>
+</button>
+</form>
+<div class="mt-8">
+<div class="relative">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
+</div>
+<div class="relative flex justify-center text-xs uppercase">
+<span class="bg-background-light dark:bg-background-dark px-2 text-slate-500 font-bold tracking-widest">Or report via</span>
+</div>
+</div>
+<div class="mt-6 grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors font-bold text-sm">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.27.81-.57z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+<span>Google</span>
+</button>
+<button class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors font-bold text-sm">
+<span class="material-symbols-outlined text-xl text-slate-900 dark:text-white">videogame_asset</span>
+<span>Discord</span>
+</button>
+</div>
+</div>
+<p class="mt-10 text-center text-sm text-slate-500">
+              Don't have an identity yet? 
+              <a class="text-primary font-bold hover:underline" href="#">Register New Agent</a>
+</p>
+</div>
+</div>
+</main>
+<footer class="p-6 bg-slate-100 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-slate-500 font-medium">© 2024 The Impostor Social deduction Game. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-xs text-slate-500 hover:text-primary transition-colors" href="#">Privacy Protocol</a>
+<a class="text-xs text-slate-500 hover:text-primary transition-colors" href="#">Terms of Engagement</a>
+<a class="text-xs text-slate-500 hover:text-primary transition-colors" href="#">Cookie Policy</a>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

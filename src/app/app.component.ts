@@ -17,10 +17,10 @@ import { SessionService } from './core/session.service';
             <div class="subtitle">Modo offline (v0)</div>
           </div>
         </div>
-        <div class="row" style="gap:8px">
+        <div class="row header-actions" style="gap:8px">
           <ng-container *ngIf="isLoggedIn()">
-            <span class="badge">👤 {{ userName() }}</span>
-            <button class="btn small ghost" (click)="logout()">Salir</button>
+            <span class="badge header-user">👤 {{ userName() }}</span>
+            <button class="btn small ghost header-logout" (click)="logout()">Salir</button>
           </ng-container>
         </div>
       </div>
@@ -28,7 +28,7 @@ import { SessionService } from './core/session.service';
       <router-outlet />
 
       <div class="muted" style="margin-top:16px;font-size:12px">
-        Consejo: en offline, todo se guarda en <span class="kbd">localStorage</span>.
+        Versión v0 en pruebas <span class="kbd">BETA</span>.
       </div>
     </div>
   `,

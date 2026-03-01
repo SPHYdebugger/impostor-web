@@ -31,7 +31,7 @@ import { OfflineStateService } from '../offline/offline-state.service';
           <li>Creas jugadores (alias).</li>
           <li>Se asigna 1 impostor por ronda.</li>
           <li>Reparto de roles en el mismo móvil/PC, uno por uno (modal).</li>
-          <li>Orden de turno aleatorio: <b>el impostor nunca sale primero</b>.</li>
+          <li>Orden de turno aleatorio.</li>
           <li>Si el impostor sobrevive 2 rondas seguidas: <b>gana</b>.</li>
         </ul>
       </div>

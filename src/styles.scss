@@ -15,29 +15,46 @@ html,body{height:100%}
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-  background: radial-gradient(1000px 700px at 20% 10%, rgba(124,92,255,0.25), transparent 55%),
-              radial-gradient(900px 600px at 80% 20%, rgba(71,209,140,0.20), transparent 55%),
-              var(--bg);
+  background:
+    radial-gradient(900px 520px at 8% -8%, rgba(124,92,255,0.22), transparent 70%),
+    radial-gradient(780px 460px at 100% 0%, rgba(71,209,140,0.16), transparent 68%),
+    linear-gradient(180deg, #0b1020 0%, #0b1122 60%, #0a1620 100%);
   color:var(--text);
 }
 
 a{color:inherit}
-.container{max-width:980px;margin:0 auto;padding:24px}
+.container{
+  max-width:980px;
+  margin:0 auto;
+  padding:24px 24px calc(96px + env(safe-area-inset-bottom));
+}
 .header{
   display:flex;align-items:center;justify-content:space-between;
   gap:12px;margin-bottom:16px;
 }
-.brand{display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:20px}
 .logo{
-  width:40px;height:40px;border-radius:14px;
-  background: linear-gradient(135deg, rgba(124,92,255,1), rgba(71,209,140,1));
+  width:80px;height:80px;border-radius:18px;
+  background: url('assets/logo.png') center/cover no-repeat;
+  border: 1px solid var(--border);
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
-.title{font-weight:800;letter-spacing:0.2px}
-.subtitle{color:var(--muted);font-size:13px}
+.title{font-size:32px;font-weight:800;letter-spacing:0.2px;line-height:1.05}
+.subtitle{color:var(--muted);font-size:26px;line-height:1.1}
+.header-actions{gap:16px !important}
+.header .badge.header-user{
+  font-size:24px !important;
+  padding: 12px 18px !important;
+  border-radius: 999px !important;
+}
+.header .btn.header-logout{
+  font-size:24px !important;
+  padding: 16px 20px !important;
+  border-radius: 14px !important;
+}
 
 .card{
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  background: linear-gradient(180deg, rgba(20,30,56,0.94), rgba(15,24,45,0.94));
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 16px;
@@ -104,3 +121,114 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 
 .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size:12px;padding:3px 6px;border-radius:8px;border:1px solid var(--border);background: rgba(0,0,0,0.2)}
+
+/* Mobile adjustments: preserve desktop look and improve phone usability */
+@media (max-width: 820px){
+  .container{
+    padding:16px 14px calc(76px + env(safe-area-inset-bottom));
+  }
+
+  .header{
+    align-items:flex-start;
+    gap:10px;
+  }
+
+  .brand{
+    gap:12px;
+  }
+
+  .logo{
+    width:52px;
+    height:52px;
+    border-radius:14px;
+  }
+
+  .title{
+    font-size:28px;
+  }
+
+  .subtitle{
+    font-size:20px;
+  }
+
+  .header-actions{
+    width:100%;
+    justify-content:flex-end;
+  }
+
+  .header .badge.header-user{
+    font-size:16px !important;
+    padding: 8px 12px !important;
+  }
+
+  .header .btn.header-logout{
+    font-size:16px !important;
+    padding: 10px 14px !important;
+  }
+
+  .card{
+    border-radius:14px;
+    padding: 12px;
+  }
+
+  .big-word{
+    font-size:32px;
+  }
+}
+
+@media (max-width: 480px){
+  .container{
+    padding:12px 10px calc(64px + env(safe-area-inset-bottom));
+  }
+
+  .header{
+    margin-bottom:12px;
+  }
+
+  .logo{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+  }
+
+  .title{
+    font-size:24px;
+  }
+
+  .subtitle{
+    font-size:16px;
+  }
+
+  .header .badge.header-user{
+    font-size:14px !important;
+    padding: 6px 10px !important;
+  }
+
+  .header .btn.header-logout{
+    font-size:14px !important;
+    padding: 8px 12px !important;
+  }
+
+  .btn{
+    padding: 9px 11px;
+    border-radius: 12px;
+  }
+
+  .input, select{
+    padding: 9px 10px;
+    border-radius: 12px;
+  }
+
+  .modal-backdrop{
+    padding: 10px;
+  }
+
+  .modal{
+    border-radius: 14px;
+    padding: 12px;
+  }
+
+  .big-word{
+    font-size:28px;
+  }
+}

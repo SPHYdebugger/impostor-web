@@ -26,7 +26,6 @@ import { SessionService } from '../../core/session.service';
 
       <div class="row" style="margin-top:14px">
         <button class="btn primary" (click)="enter()" [disabled]="!alias.trim()">Entrar</button>
-        <span class="muted" style="font-size:12px">Se guarda en <span class="kbd">localStorage</span></span>
       </div>
     </div>
   `,

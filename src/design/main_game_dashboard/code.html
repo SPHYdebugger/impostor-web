@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Main Game Dashboard - The Impostor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ad2bee",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#1c1022",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Be Vietnam Pro", sans-serif;
+        }
+        .custom-gradient-bg {
+            background: radial-gradient(circle at top left, rgba(173, 43, 238, 0.15), transparent),
+                        radial-gradient(circle at bottom right, rgba(173, 43, 238, 0.05), transparent);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen selection:bg-primary/30">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden custom-gradient-bg">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-primary/10 bg-background-light/50 dark:bg-background-dark/50 backdrop-blur-md px-6 py-4 lg:px-20 sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-2 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-2xl" data-icon="security">security</span>
+</div>
+<h1 class="text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase">The Impostor</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-primary font-semibold text-sm transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary font-medium text-sm transition-colors" href="#">Game History</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary font-medium text-sm transition-colors" href="#">Leaderboard</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary font-medium text-sm transition-colors" href="#">Store</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex items-center justify-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-primary hover:bg-primary/20 transition-all text-sm font-bold">
+<span class="material-symbols-outlined text-lg">logout</span>
+<span>Logout</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-primary/10">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold leading-none">Alex Rivera</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Level 24 Operative</p>
+</div>
+<div class="size-10 rounded-full bg-primary/20 border-2 border-primary overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Stylized avatar of a young gamer person" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMxDEk7HsRH8HwOQyhAkYUcUjFuQC4QGuDhSR-35vzc0LBYMLhB0W46jJeTKvGngxthGSzHS7411F9VvYUUQQS7MLvBjBGnULELZg7V5XwkUDzJubhgHOTtCbuMcCSGa_7GcqkAviIdF1iw6COmA9BlU8Ihxi0F8lOBhvizv7E8ef_hXFtYObamj1Fol40sb--tX-lxsxtGOCixDHvDxvPmOnsoHgAcgoMt0W1cYOrV6tiIP-3_mIGV6ntjkUm1GNzl-vnNZsD9XS5"/>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 px-6 py-8 lg:px-40 lg:py-12 max-w-7xl mx-auto w-full">
+<!-- Welcome Header -->
+<div class="mb-12">
+<h2 class="text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">
+                    Welcome back, <span class="text-primary">Agent Rivera</span>
+</h2>
+<p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+                    The agency needs your skills. Will you expose the deception or perfect your disguise? Choose your operation mode below.
+                </p>
+</div>
+<!-- Game Mode Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<!-- Play Online -->
+<div class="group relative flex flex-col bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-primary/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 shadow-xl shadow-transparent hover:shadow-primary/5 cursor-pointer">
+<div class="h-48 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent"></div>
+<img alt="Online Play" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80" data-alt="Modern gaming setup with neon lighting effects" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClwESJ5XdAzGlPYikE11dYgEGEzXbGyLTAZHUA1Uq1ZdydZuC0afYMOcgDGi5rVHojZnC5eHq33T465h0cPTtiIA3Ui47Y1PC58rQXC-d2Agp-6f_02lsNEUVzrINduaB0ZnA_KX2-P6n5gCuDhA53cOX7Pa6t8l19ifJfXtlLufJENIoMrJTS06ZNiZz_Ji_u2mnhvsyDDLAuxLCFUr-X49cDIGtFOfWqUSCNi23jcooY4i6YNEEcaQ9LPeOKPO9x8dNJBPCTDUYl"/>
+<div class="absolute top-4 left-4 bg-primary text-white p-2 rounded-lg">
+<span class="material-symbols-outlined">public</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">Play Online</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                            Connect with friends globally. Invite them via email or share a room code for the ultimate remote social deduction.
+                        </p>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-full flex items-center justify-center gap-2 transition-all">
+<span>Host Match</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Play Offline -->
+<div class="group relative flex flex-col bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-primary/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 shadow-xl shadow-transparent hover:shadow-primary/5 cursor-pointer">
+<div class="h-48 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-transparent"></div>
+<img alt="Offline Play" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80" data-alt="Friends gathering around a table playing games" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArspnfiF0uV7NoARTVRpVWH-3sEjDEdDzxLsc-YHdiGsZfVEItgGQmeutd8d18j0fD1sWS1B0aUq9PXJm2SEidtVivBcjA4xNGT7Q_vTZWGb5l4gzSW4runhUoo8PBvKgyqKlL7BJ4u-qvu4tCBCHs5TvXy9QA897kpEpZKUN2f4SarjOB_nB9YOtBRWfNCYOWpyj3qKrX1OpnR0_nq9PJwFa-G8tK9exIJwQFJWXoxiDM4ZSjTk4XJjvaE5Q-KXeOmiOwRrDgsI7v"/>
+<div class="absolute top-4 left-4 bg-indigo-500 text-white p-2 rounded-lg">
+<span class="material-symbols-outlined">group</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">Play Offline</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                            The classic party experience. Pass-and-play mode designed for 4-12 players in the same room.
+                        </p>
+<button class="w-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold py-3 rounded-full flex items-center justify-center gap-2 transition-all">
+<span>Local Game</span>
+<span class="material-symbols-outlined text-sm">devices</span>
+</button>
+</div>
+</div>
+<!-- How to Play -->
+<div class="group relative flex flex-col bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-primary/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 shadow-xl shadow-transparent hover:shadow-primary/5 cursor-pointer">
+<div class="h-48 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent"></div>
+<img alt="Tutorials" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80" data-alt="Top view of documents and strategic planning items" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhLhAJBtMd14lUogzKh5g38eFVseoR6Kp9Mp3SNSVh_mSCItJAgnbDCsPhIGBEoNW1v73n0adG2RRcqc42rQh1k0u7yY8bJNh9YRTIg-OzFkcKrQKdel_g3LGAc5YLq2KRofMlWOcGzkyMqruzfsk68WNd7s8CDjU5RIAYJfHlrLJQ35EL61PzIPBPZMXI7P9QJlX5yaQJeDv-Ol4Jg4fmqlCz5Iuv0MkPrnvninlYjBio_P9F7jv8kupE2WSb2FjOU5cN5tBw_LYH"/>
+<div class="absolute top-4 left-4 bg-emerald-500 text-white p-2 rounded-lg">
+<span class="material-symbols-outlined">school</span>
+</div>
+</div>
+<div class="p-6">
+<h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">How to Play</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                            New to the field? Master the mechanics, learn role abilities, and discover winning strategies for every scenario.
+                        </p>
+<button class="w-full border-2 border-slate-200 dark:border-slate-800 hover:border-primary text-slate-900 dark:text-white font-bold py-3 rounded-full flex items-center justify-center gap-2 transition-all">
+<span>Academy</span>
+<span class="material-symbols-outlined text-sm">menu_book</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Recent Activity Section -->
+<div class="bg-white dark:bg-slate-900/30 rounded-xl border border-slate-200 dark:border-primary/10 p-6">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                        Recent Operations
+                    </h2>
+<button class="text-primary text-sm font-bold hover:underline">View All History</button>
+</div>
+<div class="overflow-x-auto @container">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-slate-100 dark:border-slate-800">
+<th class="pb-4 font-semibold text-slate-500 dark:text-slate-400 text-sm">Operation ID</th>
+<th class="pb-4 font-semibold text-slate-500 dark:text-slate-400 text-sm">Mode</th>
+<th class="pb-4 font-semibold text-slate-500 dark:text-slate-400 text-sm">Unit Size</th>
+<th class="pb-4 font-semibold text-slate-500 dark:text-slate-400 text-sm">Date</th>
+<th class="pb-4 font-semibold text-slate-500 dark:text-slate-400 text-sm text-right">Outcome</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr>
+<td class="py-4 font-medium text-primary">#OP-9821</td>
+<td class="py-4">
+<span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold">ONLINE</span>
+</td>
+<td class="py-4 text-slate-600 dark:text-slate-400">8 Agents</td>
+<td class="py-4 text-slate-600 dark:text-slate-400">Oct 24, 2023</td>
+<td class="py-4 text-right">
+<span class="px-3 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-xs font-bold">VICTORY</span>
+</td>
+</tr>
+<tr>
+<td class="py-4 font-medium text-primary">#OP-9755</td>
+<td class="py-4">
+<span class="px-3 py-1 bg-indigo-500/10 text-indigo-500 rounded-full text-xs font-bold">OFFLINE</span>
+</td>
+<td class="py-4 text-slate-600 dark:text-slate-400">5 Agents</td>
+<td class="py-4 text-slate-600 dark:text-slate-400">Oct 22, 2023</td>
+<td class="py-4 text-right">
+<span class="px-3 py-1 bg-slate-500/10 text-slate-400 rounded-full text-xs font-bold">ABORTED</span>
+</td>
+</tr>
+<tr>
+<td class="py-4 font-medium text-primary">#OP-9612</td>
+<td class="py-4">
+<span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold">ONLINE</span>
+</td>
+<td class="py-4 text-slate-600 dark:text-slate-400">10 Agents</td>
+<td class="py-4 text-slate-600 dark:text-slate-400">Oct 20, 2023</td>
+<td class="py-4 text-right">
+<span class="px-3 py-1 bg-rose-500/10 text-rose-500 rounded-full text-xs font-bold">DEFEAT</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<footer class="mt-auto px-6 py-8 border-t border-primary/10 bg-background-light/30 dark:bg-background-dark/30 backdrop-blur-sm text-center">
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                © 2024 The Impostor Social Deduction Game. Designed for the sharpest minds.
+            </p>
+</footer>
+</div>
+</body></html>

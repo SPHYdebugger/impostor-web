@@ -9,6 +9,8 @@ export type OfflinePhase =
   | 'READY_TO_START'
   | 'PLAY'
   | 'RESULT'
+  | 'SURVIVED_NOTICE'
+  | 'CAUGHT_NOTICE'
   | 'FINISHED';
 
 export type OfflineGame = {
@@ -90,11 +92,13 @@ export class OfflineStateService {
       lastResult: g.lastResult,
     });
 
+    const revealOrder = this.buildRevealOrder(round.players);
+
     this.save({
       ...g,
       phase: 'ROLE_REVEAL',
       round,
-      revealOrder: shuffle(g.players.map(p => p.id)),
+      revealOrder,
       revealIndex: 0,
       revealOpen: false,
     });
@@ -142,9 +146,23 @@ export class OfflineStateService {
     let phase: OfflinePhase = 'RESULT';
     if (result === 'IMPOSTOR_SURVIVED' && prevStreak + 1 >= 2) {
       phase = 'FINISHED';
+    } else if (result === 'IMPOSTOR_SURVIVED') {
+      phase = 'SURVIVED_NOTICE';
+    } else {
+      phase = 'CAUGHT_NOTICE';
     }
 
     this.save({ ...g, lastResult: result, phase });
+  }
+
+  beginNextRound() {
+    // Arranca una nueva ronda con la configuración actual (jugadores + palabra actual).
+    this.beginRound();
+  }
+
+  private buildRevealOrder(players: Player[]): string[] {
+    // Orden realmente aleatorio para el reparto de roles.
+    return shuffle(players.map(p => p.id));
   }
 
   playAgainSamePlayers(newCommonWord: string) {

@@ -41,9 +41,9 @@ import { Router } from '@angular/router';
             <div style="height:10px"></div>
 
             <div class="grid" style="gap:8px">
-              <div *ngFor="let a of aliases(); let i = index">
+              <div *ngFor="let a of aliases(); let i = index; trackBy: trackByIndex">
                 <label>Alias jugador {{ i + 1 }}</label>
-                <input class="input" [(ngModel)]="aliases()[i]" (ngModelChange)="onAliasChange(i, $event)" placeholder="Ej: Jugador {{ i + 1 }}" />
+                <input class="input" [ngModel]="a" (ngModelChange)="onAliasChange(i, $event)" placeholder="Ej: Jugador {{ i + 1 }}" />
               </div>
             </div>
           </div>
@@ -51,21 +51,26 @@ import { Router } from '@angular/router';
           <div class="card" style="padding:14px">
             <h4 style="margin:0 0 10px 0">Palabra</h4>
 
-            <label>Elige de la lista</label>
-            <select class="input" [(ngModel)]="selectedWord">
+            <label>Deja que el juego elija la palabra</label>
+            <div class="row" style="justify-content:flex-start; gap:8px">
+              <button class="btn" [class.primary]="useRandomWord()" (click)="pickRandomWord()" [disabled]="words().length === 0">🎲 Aleatoria</button>
+              <button class="btn ghost" *ngIf="useRandomWord()" (click)="clearRandomWordMode()">Quitar aleatoria</button>
+            </div>
+
+            <div class="row" style="margin-top:10px">
+              <span class="muted" style="font-size:12px">Puedes elegirla entre la lista de predeterminadas</span>
+            </div>
+
+            <select class="input" [ngModel]="selectedWord" (ngModelChange)="onSelectedWordChange($event)" [disabled]="useRandomWord()">
               <option value="">— Selecciona —</option>
               <option *ngFor="let w of words()" [value]="w.word">{{ w.word }} ({{ w.category }})</option>
             </select>
 
             <div class="row" style="margin-top:10px">
-              <button class="btn" (click)="pickRandomWord()" [disabled]="words().length === 0">🎲 Aleatoria</button>
-              <span class="muted" style="font-size:12px">o escribe una</span>
+              <span class="muted" style="font-size:12px">Puedes poner la palabra que tú quieras</span>
             </div>
 
-            <div style="height:10px"></div>
-
-            <label>Palabra personalizada</label>
-            <input class="input" [(ngModel)]="customWord" placeholder="Ej: Playa" />
+            <input class="input" [ngModel]="customWord" (ngModelChange)="onCustomWordChange($event)" [disabled]="useRandomWord()" placeholder="Ej: Playa" />
 
             <div class="muted" style="margin-top:10px;font-size:12px">
               * El impostor verá <b>IMPOSTOR</b> en lugar de la palabra.
@@ -163,7 +168,42 @@ import { Router } from '@angular/router';
         </div>
 
         <div class="row" style="margin-top:14px">
-          <button class="btn primary" (click)="newRound()">Volver a jugar</button>
+          <button class="btn danger" (click)="resetAll()">Terminar y borrar</button>
+        </div>
+      </div>
+
+      <!-- SURVIVED NOTICE -->
+      <div class="card" *ngIf="phase() === 'SURVIVED_NOTICE'">
+        <h3 style="margin:0 0 6px 0">😈 El impostor sigue vivo</h3>
+        <div class="muted">
+          Ha pasado desapercibido. Va a comenzar la siguiente ronda.
+        </div>
+        <hr>
+
+        <div class="muted" style="font-size:12px">
+          El impostor se mantiene, se generará un nuevo orden aleatorio de turnos con una nueva palabra al azar.
+        </div>
+
+        <div class="row" style="margin-top:14px">
+          <button class="btn primary" (click)="beginNextRound()">Comenzar siguiente ronda</button>
+          <button class="btn danger" (click)="resetAll()">Terminar y borrar</button>
+        </div>
+      </div>
+
+      <!-- CAUGHT NOTICE -->
+      <div class="card" *ngIf="phase() === 'CAUGHT_NOTICE'">
+        <h3 style="margin:0 0 6px 0">🕵️ Impostor descubierto</h3>
+        <div class="muted">
+          El impostor era <b>{{ impostorAlias() }}</b>.
+        </div>
+        <hr>
+
+        <div class="muted" style="font-size:12px">
+          Se iniciará una nueva ronda y se volverán a repartir los roles.
+        </div>
+
+        <div class="row" style="margin-top:14px">
+          <button class="btn primary" (click)="beginNextRound()">Repartir roles de nueva ronda</button>
           <button class="btn danger" (click)="resetAll()">Terminar y borrar</button>
         </div>
       </div>
@@ -186,7 +226,7 @@ import { Router } from '@angular/router';
       </div>
 
       <!-- Modal -->
-      <div class="modal-backdrop" *ngIf="revealOpen()" (click)="toggleReveal()">
+      <div class="modal-backdrop" *ngIf="phase() === 'ROLE_REVEAL' && revealOpen()" (click)="toggleReveal()">
         <div class="modal" (click)="$event.stopPropagation()">
           <div class="row">
             <h2 style="margin:0">{{ currentRevealPlayer()?.alias }}</h2>
@@ -214,6 +254,8 @@ export class OfflineComponent implements OnInit {
   playerCount = 4;
   selectedWord = '';
   customWord = '';
+  useRandomWord = signal(false);
+  randomWordSecret = '';
   aliases = signal<string[]>(['', '', '', '']);
 
   // play UI state
@@ -253,6 +295,8 @@ export class OfflineComponent implements OnInit {
     this.aliases.set(['', '', '', '']);
     this.selectedWord = '';
     this.customWord = '';
+    this.useRandomWord.set(false);
+    this.randomWordSecret = '';
     this.speakerIndex.set(0);
   }
 
@@ -272,20 +316,50 @@ export class OfflineComponent implements OnInit {
     this.aliases.set(next);
   }
 
+  trackByIndex(index: number): number {
+    return index;
+  }
+
   pickRandomWord() {
     const list = this.words();
     if (!list.length) return;
     const idx = Math.floor(Math.random() * list.length);
-    this.selectedWord = list[idx].word;
+    this.randomWordSecret = list[idx].word;
+    this.useRandomWord.set(true);
+    this.selectedWord = '';
+    this.customWord = '';
+  }
+
+  clearRandomWordMode() {
+    this.useRandomWord.set(false);
+    this.randomWordSecret = '';
+  }
+
+  onSelectedWordChange(value: string) {
+    this.selectedWord = value;
+    if (value.trim().length > 0) {
+      this.useRandomWord.set(false);
+      this.randomWordSecret = '';
+    }
+  }
+
+  onCustomWordChange(value: string) {
+    this.customWord = value;
+    if (value.trim().length > 0) {
+      this.useRandomWord.set(false);
+      this.randomWordSecret = '';
+    }
   }
 
   canStartRound(): boolean {
     const aliasesOk = this.aliases().every(a => a.trim().length > 0);
+    if (this.useRandomWord()) return aliasesOk && this.randomWordSecret.trim().length > 0;
     const w = this.getWord();
     return aliasesOk && w.trim().length > 0;
   }
 
   private getWord(): string {
+    if (this.useRandomWord()) return this.randomWordSecret;
     return (this.customWord.trim() || this.selectedWord.trim());
   }
 
@@ -363,6 +437,24 @@ export class OfflineComponent implements OnInit {
     this.offline.setResult(r);
   }
 
+  beginNextRound() {
+    if (this.phase() === 'SURVIVED_NOTICE') {
+      const list = this.words();
+      if (list.length > 0) {
+        const idx = Math.floor(Math.random() * list.length);
+        const nextWord = list[idx].word;
+        this.useRandomWord.set(true);
+        this.randomWordSecret = nextWord;
+        this.selectedWord = '';
+        this.customWord = '';
+        this.offline.setCommonWord(nextWord);
+      }
+    }
+
+    this.speakerIndex.set(0);
+    this.offline.beginNextRound();
+  }
+
   impostorAlias(): string {
     const g = this.game();
     const id = g.round?.roles.impostorPlayerId;
@@ -370,17 +462,4 @@ export class OfflineComponent implements OnInit {
     return this.aliasById(id);
   }
 
-  newRound() {
-    // volvemos a setup pero manteniendo jugadores (se mantienen en el estado)
-    // Reutilizamos el componente: re-hidratamos aliases y dejamos elegir palabra.
-    const g = this.game();
-    this.playerCount = Math.max(3, g.players.length || this.playerCount);
-    this.aliases.set(g.players.map(p => p.alias));
-    this.selectedWord = '';
-    this.customWord = '';
-
-    // para iniciar la siguiente ronda, basta con volver a SETUP (mantenemos round/lastResult)
-    // lo hacemos reusando el almacenamiento actual:
-    this.offline.startSetup();
-  }
 }

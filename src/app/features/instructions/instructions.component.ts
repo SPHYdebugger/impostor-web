@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { inject } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -34,7 +36,17 @@ import { CommonModule } from '@angular/common';
       <div class="muted" style="margin-top:8px">
         Si tienes la palabra, da pistas sutiles. Si eres impostor, usa pistas genéricas y escucha.
       </div>
+
+      <div class="row" style="margin-top:14px">
+        <button class="btn" (click)="goHome()">Volver al menú</button>
+      </div>
     </div>
   `,
 })
-export class InstructionsComponent {}
+export class InstructionsComponent {
+  private router = inject(Router);
+
+  goHome() {
+    this.router.navigateByUrl('/');
+  }
+}
