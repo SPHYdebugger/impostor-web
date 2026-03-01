@@ -12,11 +12,9 @@ import { SessionService } from './core/session.service';
       <div class="header">
         <div class="brand" (click)="goHome()" style="cursor:pointer">
           <div class="logo"></div>
-          <div>
-            <div class="title">El Impostor</div>
-            <div class="subtitle">Modo offline (v0)</div>
-          </div>
+          <div class="title">El Impostor</div>
         </div>
+        <div class="mode-label">Versión BETA (en pruebas)</div>
         <div class="row header-actions" style="gap:8px">
           <ng-container *ngIf="isLoggedIn()">
             <span class="badge header-user">👤 {{ userName() }}</span>

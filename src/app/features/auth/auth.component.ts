@@ -10,16 +10,16 @@ import { SessionService } from '../../core/session.service';
   template: `
     <div class="card">
       <h2 style="margin:0 0 6px 0">Entrar</h2>
-      <div class="muted">Versión offline: este login es local (no hay servidor).</div>
+      <div class="muted">Versión offline: no se comparte ningún dato.</div>
       <hr>
 
       <div class="grid two">
         <div>
-          <label>Alias (obligatorio)</label>
+          <label>Alias</label>
           <input class="input" [(ngModel)]="alias" placeholder="Ej: Laura" />
         </div>
         <div>
-          <label>Email (opcional)</label>
+          <label>Email</label>
           <input class="input" [(ngModel)]="email" placeholder="Ej: laura@mail.com" />
         </div>
       </div>

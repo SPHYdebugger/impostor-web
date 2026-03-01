@@ -29,10 +29,22 @@ a{color:inherit}
   padding:24px 24px calc(96px + env(safe-area-inset-bottom));
 }
 .header{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;margin-bottom:16px;
+  display:grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "brand actions"
+    "mode actions";
+  align-items:center;
+  column-gap:16px;
+  row-gap:6px;
+  margin-bottom:16px;
 }
-.brand{display:flex;align-items:center;gap:20px}
+.brand{
+  grid-area: brand;
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
 .logo{
   width:80px;height:80px;border-radius:18px;
   background: url('assets/logo.png') center/cover no-repeat;
@@ -40,8 +52,17 @@ a{color:inherit}
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 .title{font-size:32px;font-weight:800;letter-spacing:0.2px;line-height:1.05}
-.subtitle{color:var(--muted);font-size:26px;line-height:1.1}
+.mode-label{
+  grid-area: mode;
+  color:var(--muted);
+  font-size:26px;
+  line-height:1.1;
+}
 .header-actions{gap:16px !important}
+.header .header-actions{
+  grid-area: actions;
+  justify-self:end;
+}
 .header .badge.header-user{
   font-size:24px !important;
   padding: 12px 18px !important;
@@ -129,30 +150,35 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
   }
 
   .header{
-    align-items:flex-start;
-    gap:10px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand brand"
+      "mode actions";
+    align-items:end;
+    row-gap:10px;
   }
 
   .brand{
-    gap:12px;
+    gap:14px;
   }
 
   .logo{
-    width:52px;
-    height:52px;
-    border-radius:14px;
+    width:72px;
+    height:72px;
+    border-radius:16px;
   }
 
   .title{
-    font-size:28px;
+    font-size:48px;
+    line-height:0.95;
   }
 
-  .subtitle{
-    font-size:20px;
+  .mode-label{
+    font-size:22px;
   }
 
   .header-actions{
-    width:100%;
+    width:auto;
     justify-content:flex-end;
   }
 
@@ -186,17 +212,17 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
   }
 
   .logo{
-    width:44px;
-    height:44px;
-    border-radius:12px;
+    width:64px;
+    height:64px;
+    border-radius:14px;
   }
 
   .title{
-    font-size:24px;
+    font-size:40px;
   }
 
-  .subtitle{
-    font-size:16px;
+  .mode-label{
+    font-size:18px;
   }
 
   .header .badge.header-user{
