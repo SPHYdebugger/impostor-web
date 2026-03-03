@@ -5,6 +5,7 @@ import { OfflineStateService } from './offline-state.service';
 import { WordsService, WordItem } from '../../core/words.service';
 import { Player, RoundResult } from '../../core/game-engine';
 import { Router } from '@angular/router';
+import { AnalyticsEventsService } from '../../core/analytics-events.service';
 
 @Component({
   standalone: true,
@@ -168,7 +169,7 @@ import { Router } from '@angular/router';
         </div>
 
         <div class="row" style="margin-top:14px">
-          <button class="btn danger" (click)="resetAll()">Terminar y borrar</button>
+          <button class="btn danger" (click)="openExitMenuModal('end')">Terminar y borrar</button>
         </div>
       </div>
 
@@ -186,7 +187,7 @@ import { Router } from '@angular/router';
 
         <div class="row" style="margin-top:14px">
           <button class="btn primary" (click)="beginNextRound()">Comenzar siguiente ronda</button>
-          <button class="btn danger" (click)="resetAll()">Terminar y borrar</button>
+          <button class="btn danger" (click)="openExitMenuModal('end')">Terminar y borrar</button>
         </div>
       </div>
 
@@ -204,7 +205,7 @@ import { Router } from '@angular/router';
 
         <div class="row" style="margin-top:14px">
           <button class="btn primary" (click)="beginNextRound()">Repartir roles de nueva ronda</button>
-          <button class="btn danger" (click)="resetAll()">Terminar y borrar</button>
+          <button class="btn danger" (click)="openExitMenuModal('end')">Terminar y borrar</button>
         </div>
       </div>
 
@@ -220,8 +221,8 @@ import { Router } from '@angular/router';
         </div>
 
         <div class="row" style="margin-top:14px">
-          <button class="btn primary" (click)="resetAll()">Nueva partida</button>
-          <button class="btn" (click)="goHome()">Menú</button>
+          <button class="btn primary" (click)="openNewGameModal()">Volver a jugar</button>
+          <button class="btn" (click)="openExitMenuModal('menu')">Menú</button>
         </div>
       </div>
 
@@ -241,6 +242,39 @@ import { Router } from '@angular/router';
         </div>
       </div>
 
+      <!-- New Game Modal -->
+      <div class="modal-backdrop" *ngIf="showNewGameModal()" (click)="closeNewGameModal()">
+        <div class="modal" (click)="$event.stopPropagation()">
+          <div class="row">
+            <h2 style="margin:0">Nueva partida</h2>
+          </div>
+          <div class="muted" style="margin-top:8px">
+            Se iniciará una nueva partida. Se mantendrán los mismos jugadores,
+            comenzarán las rondas de nuevo y se seleccionará una nueva palabra secreta.
+          </div>
+          <div class="row" style="margin-top:14px">
+            <button class="btn ghost" (click)="closeNewGameModal()">Cancelar</button>
+            <button class="btn primary" (click)="confirmNewGame()">Comenzar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exit Menu Modal -->
+      <div class="modal-backdrop" *ngIf="showExitMenuModal()" (click)="closeExitMenuModal()">
+        <div class="modal" (click)="$event.stopPropagation()">
+          <div class="row">
+            <h2 style="margin:0">{{ exitModalTitle() }}</h2>
+          </div>
+          <div class="muted" style="margin-top:8px">
+            {{ exitModalMessage() }}
+          </div>
+          <div class="row" style="margin-top:14px">
+            <button class="btn ghost" (click)="closeExitMenuModal()">Cancelar</button>
+            <button class="btn danger" (click)="confirmExitToMenu()">{{ exitModalConfirmLabel() }}</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   `,
 })
@@ -248,6 +282,7 @@ export class OfflineComponent implements OnInit {
   private offline = inject(OfflineStateService);
   private wordsService = inject(WordsService);
   private router = inject(Router);
+  private analytics = inject(AnalyticsEventsService);
 
   // UI state
   words = signal<WordItem[]>([]);
@@ -260,6 +295,11 @@ export class OfflineComponent implements OnInit {
 
   // play UI state
   speakerIndex = signal(0);
+  showNewGameModal = signal(false);
+  showExitMenuModal = signal(false);
+  exitModalTitle = signal('Salir al menú');
+  exitModalMessage = signal('Si sales al menú, se perderán los datos de los jugadores y la partida actual.');
+  exitModalConfirmLabel = signal('Salir al menú');
 
   // derived
   game = computed(() => this.offline.game());
@@ -290,6 +330,11 @@ export class OfflineComponent implements OnInit {
   }
 
   resetAll() {
+    const g = this.game();
+    if (g.round && g.phase !== 'SETUP') {
+      this.analytics.trackGameFinished('manual_end', g.round.roundNumber, 'offline');
+    }
+
     this.offline.resetAll();
     this.playerCount = 4;
     this.aliases.set(['', '', '', '']);
@@ -298,6 +343,8 @@ export class OfflineComponent implements OnInit {
     this.useRandomWord.set(false);
     this.randomWordSecret = '';
     this.speakerIndex.set(0);
+    this.showNewGameModal.set(false);
+    this.showExitMenuModal.set(false);
   }
 
   syncAliases() {
@@ -364,6 +411,7 @@ export class OfflineComponent implements OnInit {
   }
 
   startRound() {
+    const isNewGame = this.roundNumber() === 0;
     const aliases = this.aliases().map(a => a.trim());
     const word = this.getWord();
 
@@ -371,6 +419,10 @@ export class OfflineComponent implements OnInit {
     this.offline.setCommonWord(word);
     this.offline.beginRound();
     this.speakerIndex.set(0);
+
+    if (isNewGame) {
+      this.analytics.trackGameCreated(aliases.length, 'offline');
+    }
   }
 
   currentRevealPlayer(): Player | null {
@@ -434,7 +486,17 @@ export class OfflineComponent implements OnInit {
   }
 
   setResult(r: RoundResult) {
+    const g = this.game();
+    const streakBefore = g.round?.impostorStreak ?? 0;
+    const roundNumber = g.round?.roundNumber ?? 0;
+    const impostorWinsNow = r === 'IMPOSTOR_SURVIVED' && streakBefore + 1 >= 2;
+
     this.offline.setResult(r);
+
+    if (impostorWinsNow) {
+      this.analytics.trackImpostorWon(roundNumber, streakBefore + 1, 'offline');
+      this.analytics.trackGameFinished('impostor_won', roundNumber, 'offline');
+    }
   }
 
   beginNextRound() {
@@ -460,6 +522,54 @@ export class OfflineComponent implements OnInit {
     const id = g.round?.roles.impostorPlayerId;
     if (!id) return '';
     return this.aliasById(id);
+  }
+
+  openNewGameModal() {
+    this.showNewGameModal.set(true);
+  }
+
+  closeNewGameModal() {
+    this.showNewGameModal.set(false);
+  }
+
+  confirmNewGame() {
+    const list = this.words();
+    if (!list.length) return;
+
+    const idx = Math.floor(Math.random() * list.length);
+    const nextWord = list[idx].word;
+    this.useRandomWord.set(true);
+    this.randomWordSecret = nextWord;
+    this.selectedWord = '';
+    this.customWord = '';
+
+    this.offline.prepareNewGameSamePlayers(nextWord);
+    this.speakerIndex.set(0);
+    this.showNewGameModal.set(false);
+    this.offline.beginRound();
+  }
+
+  openExitMenuModal(kind: 'menu' | 'end') {
+    if (kind === 'end') {
+      this.exitModalTitle.set('Terminar y borrar');
+      this.exitModalMessage.set('Si terminas la partida, se perderán los datos de los jugadores y la partida actual.');
+      this.exitModalConfirmLabel.set('Terminar y borrar');
+    } else {
+      this.exitModalTitle.set('Salir al menú');
+      this.exitModalMessage.set('Si sales al menú, se perderán los datos de los jugadores y la partida actual.');
+      this.exitModalConfirmLabel.set('Salir al menú');
+    }
+    this.showExitMenuModal.set(true);
+  }
+
+  closeExitMenuModal() {
+    this.showExitMenuModal.set(false);
+  }
+
+  confirmExitToMenu() {
+    this.showExitMenuModal.set(false);
+    this.resetAll();
+    this.goHome();
   }
 
 }

@@ -174,6 +174,20 @@ export class OfflineStateService {
     });
   }
 
+  prepareNewGameSamePlayers(newCommonWord: string) {
+    const g = this.game();
+    this.save({
+      ...g,
+      commonWord: newCommonWord.trim(),
+      round: null,
+      lastResult: null,
+      phase: 'SETUP',
+      revealOrder: [],
+      revealIndex: 0,
+      revealOpen: false,
+    });
+  }
+
   private defaultGame(): OfflineGame {
     return {
       phase: 'SETUP',

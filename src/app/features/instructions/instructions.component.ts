@@ -12,12 +12,16 @@ import { inject } from '@angular/core';
       <div class="muted">Juego social de deducción: todos conocen la palabra menos 1 impostor.</div>
       <hr>
 
-      <h3>Modalidad offline (la que incluye esta versión)</h3>
+      <h3>Modalidad offline</h3>
       <ol class="muted">
         <li>El creador indica el número de jugadores y sus alias.</li>
-        <li>Se elige una palabra común (o la app te propone una).</li>
-        <li>La app asigna un impostor y reparte roles en el mismo dispositivo, de uno en uno.</li>
-        <li>Al comenzar, aparece el orden de turno aleatorio (el impostor nunca puede ser el primero).</li>
+        <li>Se puede dejar que el juego elija una palabra al azar o seleccionar una (entonces el creador no podrá jugar)</li>
+        <li>La app asigna un impostor y reparte roles aleatoriamente en el mismo dispositivo.</li>
+        <li>Cada jugador deberá darle al botón con su nombre y el juego le enseñará una palabra. Puede ser la palabra secreta o la palabra IMPOSTOR</li>
+        <li>Una vez que el jugador lee su palabra debe darle otra vez a la pantalla para que desaparezca y pasarlo al compañero que le toque</li>  
+        <li>Una vez que todos los jugadores conozcan su palabra, empezará el juego</li>  
+        <li>Al comenzar, aparece el orden de turno aleatorio.</li>
+        <li>Cada jugador en su turno deberá decir una palabra relacionada con la palabra secreta. Los jugadores que saben la palabra lo tendrán fácil, pero el impostor deberá deducir la palabra que es y decir otra que también esté relacionada para que sus compañeros no desconfien de él.</li>
         <li>Al terminar la ronda, el creador indica si se descubrió al impostor o si sobrevivió.</li>
         <li>Si el impostor sobrevive <b>2 rondas seguidas</b>, gana y la partida finaliza.</li>
         <li>Si lo descubren antes, en la siguiente ronda se elige un impostor distinto al azar.</li>

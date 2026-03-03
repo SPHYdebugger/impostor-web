@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SessionService } from '../../core/session.service';
+import { AnalyticsEventsService } from '../../core/analytics-events.service';
 
 @Component({
   standalone: true,
@@ -33,12 +34,14 @@ import { SessionService } from '../../core/session.service';
 export class AuthComponent {
   private session = inject(SessionService);
   private router = inject(Router);
+  private analytics = inject(AnalyticsEventsService);
 
   alias = '';
   email = '';
 
   enter() {
     this.session.loginOrRegister(this.alias, this.email);
+    this.analytics.trackUsuarioId();
     this.router.navigateByUrl('/');
   }
 }
